@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\PeminjamanController;
-use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,20 +35,3 @@ Route::resource('buku', BukuController::class);
 // Menghasilkan rute untuk: index, create, store, show, edit, update.
 // Note: Kita tidak menggunakan 'destroy' karena kita menggunakan 'update' untuk mengubah status pengembalian.
 Route::resource('peminjaman', PeminjamanController::class)->except(['destroy']);
-
-// --- AUTH ROUTES (Harus Login dulu) ---
-Route::middleware('auth')->group(function () {
-    
-    // Logout
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-    // Dashboard
-    Route::get('/', function () {
-        return view('welcome'); 
-    })->name('dashboard');
-
-    // Resource Controllers (CRUD)
-    Route::resource('anggota', AnggotaController::class);
-    Route::resource('buku', BukuController::class);
-    Route::resource('peminjaman', PeminjamanController::class)->except(['destroy']);
-});
