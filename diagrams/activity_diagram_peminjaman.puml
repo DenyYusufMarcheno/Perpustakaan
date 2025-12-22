@@ -1,0 +1,54 @@
+@startuml Activity Diagram - Proses Peminjaman Buku
+
+!theme plain
+skinparam defaultFontSize 11
+
+title Activity Diagram - Proses Peminjaman Buku
+
+start
+
+:Petugas/Admin Login;
+
+:Pilih Menu Peminjaman;
+
+:Klik Tambah Peminjaman Baru;
+
+:Sistem Menampilkan Form Peminjaman;
+
+:Petugas Memilih Anggota;
+
+:Petugas Memilih Buku;
+
+if (Stok Buku > 0?) then (Ya)
+    :Petugas Mengisi Tanggal Pinjam;
+    
+    :Submit Form Peminjaman;
+    
+    :Sistem Validasi Data;
+    
+    if (Data Valid?) then (Ya)
+        :Sistem Menyimpan Data Peminjaman;
+        
+        :Sistem Mengurangi Stok Buku;
+        
+        :Sistem Menampilkan Pesan Sukses;
+        
+        :Redirect ke Daftar Peminjaman;
+    else (Tidak)
+        :Sistem Menampilkan Pesan Error;
+        
+        :Kembali ke Form Peminjaman;
+        
+        stop
+    endif
+else (Tidak)
+    :Sistem Menampilkan Pesan "Stok Habis";
+    
+    :Kembali ke Form Peminjaman;
+    
+    stop
+endif
+
+stop
+
+@enduml

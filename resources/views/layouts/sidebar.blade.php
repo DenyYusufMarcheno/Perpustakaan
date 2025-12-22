@@ -4,7 +4,7 @@
             <div class="d-flex justify-content-between">
                 <div class="logo">
                     <a href="{{ url('/') }}">
-                        <img src="{{ asset('assets/mazer/images/logo/logo.svg') }}" alt="Logo" srcset="">
+                        <img src="{{ asset('assets/mazer/dist/assets/compiled/svg/logo.svg') }}" alt="Logo" srcset="">
                     </a>
                 </div>
                 <div class="toggler">
@@ -16,6 +16,14 @@
             <ul class="menu">
                 <li class="sidebar-title">Menu Utama</li>
 
+                <li class="sidebar-item {{ Request::is('/') ? 'active' : '' }}">
+                    <a href="{{ url('/') }}" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                @if(auth()->check() && (auth()->user()->isAdmin() || auth()->user()->isPetugas()))
                 <li class="sidebar-item {{ Request::is('anggota*') ? 'active' : '' }}">
                     <a href="{{ route('anggota.index') }}" class='sidebar-link'>
                         <i class="bi bi-people-fill"></i>
@@ -36,6 +44,37 @@
                         <span>Transaksi Peminjaman</span>
                     </a>
                 </li>
+                @endif
+
+                @if(auth()->check() && auth()->user()->isAnggota())
+                <li class="sidebar-item {{ Request::is('buku-list') ? 'active' : '' }}">
+                    <a href="{{ route('buku.list') }}" class='sidebar-link'>
+                        <i class="bi bi-book-fill"></i>
+                        <span>Lihat Katalog Buku</span>
+                    </a>
+                </li>
+                @endif
+
+                <li class="sidebar-title">Akun</li>
+
+                @auth
+                <li class="sidebar-item">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-person-circle"></i>
+                        <span>{{ auth()->user()->name }} ({{ ucfirst(auth()->user()->role) }})</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class='sidebar-link btn btn-link text-decoration-none w-100 text-start'>
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Logout</span>
+                        </button>
+                    </form>
+                </li>
+                @endauth
 
             </ul>
         </div>

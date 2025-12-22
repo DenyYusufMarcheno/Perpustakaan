@@ -10,22 +10,19 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-{
-    Schema::create('bukus', function (Blueprint $table) {
-        $table->id();
-        $table->string('judul');
-        $table->string('penulis');
-        $table->string('isbn')->unique();
-        $table->integer('stok')->default(0);
-        $table->timestamps();
-    });
-}
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->enum('role', ['admin', 'petugas', 'anggota'])->default('anggota')->after('email');
+        });
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('bukus');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('role');
+        });
     }
 };
