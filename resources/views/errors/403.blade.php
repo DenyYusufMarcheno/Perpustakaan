@@ -12,7 +12,7 @@
                         <i class="bi bi-shield-exclamation" style="font-size: 5rem; color: #dc3545;"></i>
                     </div>
                     <h2 class="mb-3">403 - Akses Ditolak</h2>
-                    <p class="lead mb-4">{{ $exception->getMessage() ?: 'Anda tidak memiliki izin untuk mengakses halaman ini.' }}</p>
+                    <p class="lead mb-4">Anda tidak memiliki izin untuk mengakses halaman ini.</p>
                     <div class="alert alert-warning d-inline-block">
                         <i class="bi bi-info-circle"></i>
                         Anda login sebagai: <strong>{{ ucfirst(auth()->user()->role ?? 'Guest') }}</strong>

@@ -68,7 +68,7 @@
                 
                 {{-- Dark Mode Toggle --}}
                 <li class="sidebar-item">
-                    <a href="#" id="darkModeToggle" class='sidebar-link dark-mode-toggle'>
+                    <a href="#" id="darkModeToggle" class='sidebar-link dark-mode-toggle' role="button" aria-label="Toggle dark mode">
                         <i class="bi bi-moon-fill"></i>
                         <span>Mode Gelap</span>
                     </a>

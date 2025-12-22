@@ -47,10 +47,10 @@
                             <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-warning">Edit</a>
                             
                             @if($user->id !== auth()->id())
-                            <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
+                            <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus user ini?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus user {{ $user->name }}?')">Hapus</button>
+                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                             </form>
                             @endif
                         </td>

@@ -11,12 +11,25 @@ document.addEventListener('DOMContentLoaded', function() {
     // Toggle dark mode
     const darkModeToggle = document.getElementById('darkModeToggle');
     if (darkModeToggle) {
-        darkModeToggle.addEventListener('click', function() {
-            document.body.classList.toggle('dark-mode');
-            const isDark = document.body.classList.contains('dark-mode');
-            localStorage.setItem('darkMode', isDark);
-            updateToggleIcon(isDark);
+        darkModeToggle.addEventListener('click', function(event) {
+            event.preventDefault();
+            toggleDarkMode();
         });
+        
+        // Keyboard support for accessibility
+        darkModeToggle.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                toggleDarkMode();
+            }
+        });
+    }
+    
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDark);
+        updateToggleIcon(isDark);
     }
     
     function updateToggleIcon(isDark) {
