@@ -1,0 +1,46 @@
+@startuml Activity Diagram - Proses Pengembalian Buku
+
+!theme plain
+skinparam defaultFontSize 11
+
+title Activity Diagram - Proses Pengembalian Buku
+
+start
+
+:Petugas/Admin Login;
+
+:Pilih Menu Peminjaman;
+
+:Petugas Melihat Daftar Peminjaman Aktif;
+
+:Petugas Memilih Peminjaman yang Akan Dikembalikan;
+
+if (Status Peminjaman = "Dipinjam"?) then (Ya)
+    :Klik Tombol Kembalikan;
+    
+    :Sistem Validasi Data;
+    
+    if (Valid?) then (Ya)
+        :Sistem Update Status Menjadi "Sudah Kembali";
+        
+        :Sistem Set Tanggal Kembali = Hari Ini;
+        
+        :Sistem Menambah Stok Buku;
+        
+        :Sistem Menampilkan Pesan Sukses;
+        
+        :Redirect ke Daftar Peminjaman;
+    else (Tidak)
+        :Sistem Menampilkan Pesan Error;
+        
+        stop
+    endif
+else (Tidak - Sudah Dikembalikan)
+    :Sistem Menampilkan Pesan "Buku Sudah Dikembalikan";
+    
+    stop
+endif
+
+stop
+
+@enduml

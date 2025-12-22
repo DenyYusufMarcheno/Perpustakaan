@@ -1,0 +1,95 @@
+@startuml Sequence Diagram - Proses Peminjaman Buku
+
+!theme plain
+skinparam defaultFontSize 10
+
+title Sequence Diagram - Proses Peminjaman Buku
+
+actor "Petugas" as Petugas
+participant "Web Browser" as Browser
+participant "PeminjamanController" as Controller
+participant "Peminjaman Model" as PeminjamanModel
+participant "Buku Model" as BukuModel
+database "Database" as DB
+
+Petugas -> Browser: Akses halaman peminjaman/create
+activate Browser
+
+Browser -> Controller: GET /peminjaman/create
+activate Controller
+
+Controller -> DB: Ambil daftar Anggota
+activate DB
+DB --> Controller: Data Anggota
+deactivate DB
+
+Controller -> BukuModel: where('stok', '>', 0)->get()
+activate BukuModel
+BukuModel -> DB: Query Buku dengan stok > 0
+activate DB
+DB --> BukuModel: Data Buku
+deactivate DB
+BukuModel --> Controller: Daftar Buku
+deactivate BukuModel
+
+Controller --> Browser: View form peminjaman + data
+deactivate Controller
+
+Browser --> Petugas: Tampilkan form peminjaman
+deactivate Browser
+
+Petugas -> Browser: Isi form dan klik Submit
+activate Browser
+
+Browser -> Controller: POST /peminjaman/store
+activate Controller
+
+Controller -> Controller: Validasi input data
+note right: Validasi:\n- anggota_id exists\n- buku_id exists\n- tanggal_pinjam valid
+
+alt Data Valid
+    Controller -> BukuModel: findOrFail(buku_id)
+    activate BukuModel
+    BukuModel -> DB: SELECT * FROM bukus WHERE id = ?
+    activate DB
+    DB --> BukuModel: Data Buku
+    deactivate DB
+    BukuModel --> Controller: Object Buku
+    deactivate BukuModel
+    
+    alt Stok > 0
+        Controller -> BukuModel: decrement('stok')
+        activate BukuModel
+        BukuModel -> DB: UPDATE bukus SET stok = stok - 1
+        activate DB
+        DB --> BukuModel: Success
+        deactivate DB
+        BukuModel --> Controller: Success
+        deactivate BukuModel
+        
+        Controller -> PeminjamanModel: create(data)
+        activate PeminjamanModel
+        PeminjamanModel -> DB: INSERT INTO peminjamans
+        activate DB
+        DB --> PeminjamanModel: Success
+        deactivate DB
+        PeminjamanModel --> Controller: Peminjaman Object
+        deactivate PeminjamanModel
+        
+        Controller --> Browser: Redirect dengan pesan sukses
+        Browser --> Petugas: Tampilkan pesan "Peminjaman berhasil"
+        
+    else Stok = 0
+        Controller --> Browser: Redirect dengan pesan error
+        Browser --> Petugas: Tampilkan pesan "Stok habis"
+    end
+    
+else Data Tidak Valid
+    Controller --> Browser: Return dengan error validasi
+    Browser --> Petugas: Tampilkan error validasi
+end
+
+deactivate Controller
+deactivate Browser
+
+@enduml

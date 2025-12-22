@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,23 +16,33 @@ use App\Http\Controllers\PeminjamanController;
 |
 */
 
-// Rute Halaman Utama (Dashboard)
+// Rute Authentication (Login & Logout)
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Rute Halaman Utama (Dashboard) - Memerlukan autentikasi
 Route::get('/', function () {
-    // Ganti 'welcome' dengan nama view dashboard Mazer Anda
     return view('welcome'); 
+})->middleware('auth')->name('dashboard');
+
+// --- Rute CRUD SISTEM PERPUSTAKAAN (Protected by Authentication & Role) ---
+
+// Group untuk Admin dan Petugas - Full CRUD access
+Route::middleware(['auth', 'role:admin,petugas'])->group(function () {
+    
+    // 1. CRUD Anggota - Hanya Admin dan Petugas
+    Route::resource('anggota', AnggotaController::class);
+    
+    // 2. CRUD Buku (Katalog) - Hanya Admin dan Petugas
+    Route::resource('buku', BukuController::class);
+    
+    // 3. CRUD Peminjaman (Transaksi) - Hanya Admin dan Petugas
+    Route::resource('peminjaman', PeminjamanController::class)->except(['destroy']);
 });
 
-// --- Rute CRUD SISTEM PERPUSTAKAAN ---
-
-// 1. CRUD Anggota
-// Menghasilkan rute untuk: index, create, store, show, edit, update, destroy
-Route::resource('anggota', AnggotaController::class);
-
-// 2. CRUD Buku (Katalog)
-// Menghasilkan rute untuk: index, create, store, show, edit, update, destroy
-Route::resource('buku', BukuController::class);
-
-// 3. CRUD Peminjaman (Transaksi)
-// Menghasilkan rute untuk: index, create, store, show, edit, update.
-// Note: Kita tidak menggunakan 'destroy' karena kita menggunakan 'update' untuk mengubah status pengembalian.
-Route::resource('peminjaman', PeminjamanController::class)->except(['destroy']);
+// Group untuk semua authenticated users (dapat melihat daftar)
+Route::middleware(['auth'])->group(function () {
+    // Anggota dapat melihat daftar buku
+    Route::get('buku-list', [BukuController::class, 'index'])->name('buku.list');
+});
