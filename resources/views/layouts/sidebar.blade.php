@@ -45,6 +45,15 @@
                     </a>
                 </li>
                 @endif
+                
+                @if(auth()->check() && auth()->user()->isAdmin())
+                <li class="sidebar-item {{ Request::is('users*') ? 'active' : '' }}">
+                    <a href="{{ route('users.index') }}" class='sidebar-link'>
+                        <i class="bi bi-person-badge-fill"></i>
+                        <span>Kelola User/Member/Admin</span>
+                    </a>
+                </li>
+                @endif
 
                 @if(auth()->check() && auth()->user()->isAnggota())
                 <li class="sidebar-item {{ Request::is('buku-list') ? 'active' : '' }}">
@@ -56,6 +65,14 @@
                 @endif
 
                 <li class="sidebar-title">Akun</li>
+                
+                {{-- Dark Mode Toggle --}}
+                <li class="sidebar-item">
+                    <a href="#" id="darkModeToggle" class='sidebar-link dark-mode-toggle' role="button" aria-label="Toggle dark mode">
+                        <i class="bi bi-moon-fill"></i>
+                        <span>Mode Gelap</span>
+                    </a>
+                </li>
 
                 @auth
                 <li class="sidebar-item">

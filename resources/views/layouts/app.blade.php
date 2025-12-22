@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="{{ asset('assets/mazer/dist/assets/compiled/css/app-dark.css') }}"> 
     <link rel="stylesheet" href="{{ asset('assets/mazer/dist/assets/compiled/css/iconly.css') }}"> 
     {{-- Jika ada vendor lain (misalnya bootstrap-icons), sesuaikan path-nya di sini --}}
+    
+    {{-- Dark Mode CSS --}}
+    <link rel="stylesheet" href="{{ asset('css/darkmode.css') }}">
 </head>
 <body>
     <div id="app">
@@ -48,5 +51,8 @@
     {{-- Asumsi main script Mazer adalah app.js atau main.js di dalam compiled/js --}}
     <script src="{{ asset('assets/mazer/dist/assets/compiled/js/app.js') }}"></script>
     {{-- Tambahkan script lain yang diperlukan di sini --}}
+    
+    {{-- Dark Mode Script --}}
+    <script src="{{ asset('js/darkmode.js') }}"></script>
 </body>
 </html>
