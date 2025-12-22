@@ -5,6 +5,7 @@ use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,12 @@ Route::middleware(['auth', 'role:admin,petugas'])->group(function () {
     
     // 3. CRUD Peminjaman (Transaksi) - Hanya Admin dan Petugas
     Route::resource('peminjaman', PeminjamanController::class)->except(['destroy']);
+});
+
+// Group untuk Admin Only - User Management
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    // 4. CRUD Users (Member/Admin) - Hanya Admin
+    Route::resource('users', UserController::class);
 });
 
 // Group untuk semua authenticated users (dapat melihat daftar)
