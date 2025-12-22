@@ -5,10 +5,12 @@
 
 ## Quick Start
 
+**Note**: This application now uses MySQL database. Ensure XAMPP (or similar MySQL server) is installed and running before starting.
+
 ### Prerequisites
 - PHP >= 8.2
 - Composer
-- SQLite
+- XAMPP (with MySQL/MariaDB and PHPMyAdmin)
 
 ### Installation Steps
 
@@ -22,7 +24,27 @@ php artisan key:generate
 
 2. **Database Setup**
 ```bash
-touch database/database.sqlite
+# Start XAMPP and ensure MySQL is running
+# Create database using PHPMyAdmin or MySQL command line:
+# 1. Open PHPMyAdmin (http://localhost/phpmyadmin)
+# 2. Click "New" to create a new database
+# 3. Name it "perpustakaan" (or your preferred name)
+# 4. Or use MySQL command line:
+mysql -u root -p
+CREATE DATABASE perpustakaan CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+exit;
+
+# Configure .env file
+cp .env.example .env
+# Edit .env and set:
+# DB_CONNECTION=mysql
+# DB_HOST=127.0.0.1
+# DB_PORT=3306
+# DB_DATABASE=perpustakaan
+# DB_USERNAME=root
+# DB_PASSWORD=    (leave empty if no password set in XAMPP)
+
+# Run migrations and seed data
 php artisan migrate:fresh --seed
 ```
 
@@ -177,6 +199,23 @@ All diagrams are in PlantUML format (`.puml`) located in `/diagrams/`:
 
 ## Troubleshooting
 
+### Issue: "SQLSTATE[HY000] [2002] No such file or directory"
+This means MySQL is not running. Start XAMPP and ensure MySQL service is active.
+
+### Issue: "SQLSTATE[HY000] [1045] Access denied for user"
+Check your MySQL credentials in `.env` file. Default XAMPP MySQL user is `root` with no password.
+
+### Issue: "SQLSTATE[42000]: Syntax error or access violation: 1115 Unknown character set: 'utf8mb4'"
+Your MySQL version is too old. XAMPP should have MySQL 5.7+ or MariaDB 10.2+.
+
+### Issue: "Database does not exist"
+```bash
+# Create the database first using PHPMyAdmin or MySQL CLI:
+mysql -u root -p
+CREATE DATABASE perpustakaan CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+exit;
+```
+
 ### Issue: "Database file does not exist"
 ```bash
 touch database/database.sqlite
@@ -205,7 +244,7 @@ php artisan cache:clear
 - [x] Change all default passwords
 - [x] Use strong APP_KEY
 - [x] Enable HTTPS
-- [x] Use MySQL/PostgreSQL instead of SQLite
+- [x] MySQL is now the default database (production-ready)
 - [x] Set APP_DEBUG=false
 - [x] Configure proper file permissions
 - [x] Enable CSRF protection (already enabled)
