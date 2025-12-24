@@ -1,0 +1,100 @@
+@startuml Sequence Diagram - Proses Pengembalian Buku
+
+!theme plain
+skinparam defaultFontSize 10
+
+title Sequence Diagram - Proses Pengembalian Buku
+
+actor "Petugas" as Petugas
+participant "Web Browser" as Browser
+participant "PeminjamanController" as Controller
+participant "Peminjaman Model" as PeminjamanModel
+participant "Buku Model" as BukuModel
+database "Database" as DB
+
+Petugas -> Browser: Akses halaman peminjaman
+activate Browser
+
+Browser -> Controller: GET /peminjaman
+activate Controller
+
+Controller -> PeminjamanModel: with(['anggota', 'buku'])->latest()->paginate(10)
+activate PeminjamanModel
+PeminjamanModel -> DB: SELECT * FROM peminjamans\nJOIN anggotas\nJOIN bukus
+activate DB
+DB --> PeminjamanModel: Data Peminjaman dengan relasi
+deactivate DB
+PeminjamanModel --> Controller: Collection Peminjaman
+deactivate PeminjamanModel
+
+Controller --> Browser: View daftar peminjaman
+deactivate Controller
+
+Browser --> Petugas: Tampilkan daftar peminjaman
+deactivate Browser
+
+Petugas -> Browser: Klik tombol "Kembalikan" pada peminjaman
+activate Browser
+
+Browser -> Controller: PUT /peminjaman/{id}
+activate Controller
+note right: Data: status = "Sudah Kembali"
+
+Controller -> Controller: Validasi input
+note right: Validasi:\n- status in ['Sudah Kembali']
+
+alt Data Valid
+    Controller -> PeminjamanModel: findOrFail(id)
+    activate PeminjamanModel
+    PeminjamanModel -> DB: SELECT * FROM peminjamans WHERE id = ?
+    activate DB
+    DB --> PeminjamanModel: Data Peminjaman
+    deactivate DB
+    PeminjamanModel --> Controller: Object Peminjaman
+    deactivate PeminjamanModel
+    
+    alt Status = "Dipinjam"
+        Controller -> PeminjamanModel: update(status, tanggal_kembali)
+        activate PeminjamanModel
+        PeminjamanModel -> DB: UPDATE peminjamans\nSET status = 'Sudah Kembali',\ntanggal_kembali = NOW()
+        activate DB
+        DB --> PeminjamanModel: Success
+        deactivate DB
+        PeminjamanModel --> Controller: Success
+        deactivate PeminjamanModel
+        
+        Controller -> BukuModel: findOrFail(buku_id)
+        activate BukuModel
+        BukuModel -> DB: SELECT * FROM bukus WHERE id = ?
+        activate DB
+        DB --> BukuModel: Data Buku
+        deactivate DB
+        BukuModel --> Controller: Object Buku
+        deactivate BukuModel
+        
+        Controller -> BukuModel: increment('stok')
+        activate BukuModel
+        BukuModel -> DB: UPDATE bukus SET stok = stok + 1
+        activate DB
+        DB --> BukuModel: Success
+        deactivate DB
+        BukuModel --> Controller: Success
+        deactivate BukuModel
+        
+        Controller --> Browser: Redirect dengan pesan sukses
+        Browser --> Petugas: Tampilkan pesan "Pengembalian berhasil"
+        
+    else Status = "Sudah Kembali"
+        Controller --> Browser: Redirect dengan pesan error
+        Browser --> Petugas: Tampilkan pesan "Buku sudah dikembalikan"
+    end
+    
+else Data Tidak Valid
+    Controller --> Browser: Return dengan error validasi
+    Browser --> Petugas: Tampilkan error validasi
+end
+
+deactivate Controller
+deactivate Browser
+
+@enduml

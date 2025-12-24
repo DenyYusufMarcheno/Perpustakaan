@@ -1,0 +1,212 @@
+/* Dark Mode Styles with Dark Purple Theme */
+body.dark-mode {
+    background-color: #1a0f2e;
+    color: #e0e0e0;
+}
+
+body.dark-mode #app {
+    background-color: #1a0f2e;
+}
+
+body.dark-mode #main {
+    background-color: #1a0f2e;
+}
+
+/* Sidebar dark mode */
+body.dark-mode #sidebar {
+    background-color: #2d1b4e;
+    border-right: 1px solid #4a2e7a;
+}
+
+body.dark-mode #sidebar .sidebar-wrapper {
+    background-color: #2d1b4e;
+}
+
+body.dark-mode #sidebar .sidebar-menu .menu .sidebar-item .sidebar-link {
+    color: #b8a3d6;
+}
+
+body.dark-mode #sidebar .sidebar-menu .menu .sidebar-item .sidebar-link:hover,
+body.dark-mode #sidebar .sidebar-menu .menu .sidebar-item.active .sidebar-link {
+    background-color: #4a2e7a;
+    color: #ffffff;
+}
+
+body.dark-mode #sidebar .sidebar-title {
+    color: #9575cd;
+}
+
+/* Card dark mode */
+body.dark-mode .card {
+    background-color: #2d1b4e;
+    border-color: #4a2e7a;
+    color: #e0e0e0;
+}
+
+body.dark-mode .card-header {
+    background-color: #3d2560;
+    border-bottom-color: #4a2e7a;
+    color: #e0e0e0;
+}
+
+body.dark-mode .card-body {
+    background-color: #2d1b4e;
+    color: #e0e0e0;
+}
+
+/* Table dark mode */
+body.dark-mode .table {
+    color: #e0e0e0;
+}
+
+body.dark-mode .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #3d2560;
+}
+
+body.dark-mode .table thead th {
+    background-color: #4a2e7a;
+    color: #ffffff;
+    border-color: #5e3a9e;
+}
+
+body.dark-mode .table tbody td {
+    border-color: #4a2e7a;
+}
+
+/* Buttons dark mode */
+body.dark-mode .btn-primary {
+    background-color: #6a3fb5;
+    border-color: #6a3fb5;
+}
+
+body.dark-mode .btn-primary:hover {
+    background-color: #7e51c9;
+    border-color: #7e51c9;
+}
+
+body.dark-mode .btn-success {
+    background-color: #2e7d4e;
+    border-color: #2e7d4e;
+}
+
+body.dark-mode .btn-warning {
+    background-color: #c77d0f;
+    border-color: #c77d0f;
+}
+
+body.dark-mode .btn-danger {
+    background-color: #c2185b;
+    border-color: #c2185b;
+}
+
+body.dark-mode .btn-info {
+    background-color: #0288d1;
+    border-color: #0288d1;
+}
+
+/* Alert dark mode */
+body.dark-mode .alert {
+    background-color: #3d2560;
+    border-color: #4a2e7a;
+    color: #e0e0e0;
+}
+
+body.dark-mode .alert-info {
+    background-color: #1e4d6b;
+    border-color: #2563a8;
+    color: #a8d8f0;
+}
+
+body.dark-mode .alert-success {
+    background-color: #1e4d2e;
+    border-color: #2e7d4e;
+    color: #a8f0c0;
+}
+
+body.dark-mode .alert-warning {
+    background-color: #6b4d1e;
+    border-color: #a87d2e;
+    color: #f0d8a8;
+}
+
+body.dark-mode .alert-danger {
+    background-color: #6b1e3d;
+    border-color: #a82e5e;
+    color: #f0a8c0;
+}
+
+/* Form inputs dark mode */
+body.dark-mode .form-control {
+    background-color: #3d2560;
+    border-color: #4a2e7a;
+    color: #e0e0e0;
+}
+
+body.dark-mode .form-control:focus {
+    background-color: #4a2e7a;
+    border-color: #6a3fb5;
+    color: #e0e0e0;
+}
+
+body.dark-mode .form-label {
+    color: #b8a3d6;
+}
+
+body.dark-mode .form-select {
+    background-color: #3d2560;
+    border-color: #4a2e7a;
+    color: #e0e0e0;
+}
+
+/* Footer dark mode */
+body.dark-mode footer {
+    background-color: #2d1b4e;
+    color: #b8a3d6;
+}
+
+/* Page heading dark mode */
+body.dark-mode .page-heading h3 {
+    color: #e0e0e0;
+}
+
+/* Dark mode toggle button */
+.dark-mode-toggle {
+    cursor: pointer;
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+}
+
+body.dark-mode .dark-mode-toggle {
+    background-color: #4a2e7a;
+    border-color: #6a3fb5;
+}
+
+.dark-mode-toggle:hover {
+    background-color: #e0e0e0;
+}
+
+body.dark-mode .dark-mode-toggle:hover {
+    background-color: #5e3a9e;
+}
+
+/* Pagination dark mode */
+body.dark-mode .pagination .page-link {
+    background-color: #3d2560;
+    border-color: #4a2e7a;
+    color: #b8a3d6;
+}
+
+body.dark-mode .pagination .page-link:hover {
+    background-color: #4a2e7a;
+    border-color: #6a3fb5;
+    color: #ffffff;
+}
+
+body.dark-mode .pagination .page-item.active .page-link {
+    background-color: #6a3fb5;
+    border-color: #6a3fb5;
+    color: #ffffff;
+}

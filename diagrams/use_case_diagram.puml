@@ -1,0 +1,98 @@
+@startuml Use Case Diagram - Sistem Peminjaman Buku Perpustakaan
+
+!theme plain
+skinparam actorStyle awesome
+
+left to right direction
+
+' Actors
+actor "Admin" as Admin
+actor "Petugas" as Petugas
+actor "Anggota" as Anggota
+
+' System boundary
+rectangle "Sistem Peminjaman Buku Perpustakaan" {
+    
+    ' Authentication use cases
+    usecase "Login" as UC1
+    usecase "Logout" as UC2
+    
+    ' Buku Management use cases
+    usecase "Kelola Data Buku" as UC3
+    usecase "Tambah Buku" as UC3_1
+    usecase "Edit Buku" as UC3_2
+    usecase "Hapus Buku" as UC3_3
+    usecase "Lihat Daftar Buku" as UC3_4
+    
+    ' Anggota Management use cases
+    usecase "Kelola Data Anggota" as UC4
+    usecase "Tambah Anggota" as UC4_1
+    usecase "Edit Anggota" as UC4_2
+    usecase "Hapus Anggota" as UC4_3
+    usecase "Lihat Daftar Anggota" as UC4_4
+    
+    ' Peminjaman Management use cases
+    usecase "Kelola Peminjaman" as UC5
+    usecase "Catat Peminjaman Baru" as UC5_1
+    usecase "Proses Pengembalian" as UC5_2
+    usecase "Lihat Riwayat Peminjaman" as UC5_3
+    
+    ' View only use cases
+    usecase "Lihat Katalog Buku" as UC6
+}
+
+' Admin relationships
+Admin --> UC1
+Admin --> UC2
+Admin --> UC3
+Admin --> UC4
+Admin --> UC5
+
+' Petugas relationships
+Petugas --> UC1
+Petugas --> UC2
+Petugas --> UC3
+Petugas --> UC4
+Petugas --> UC5
+
+' Anggota relationships
+Anggota --> UC1
+Anggota --> UC2
+Anggota --> UC6
+
+' Include relationships for Buku Management
+UC3 ..> UC3_1 : <<include>>
+UC3 ..> UC3_2 : <<include>>
+UC3 ..> UC3_3 : <<include>>
+UC3 ..> UC3_4 : <<include>>
+
+' Include relationships for Anggota Management
+UC4 ..> UC4_1 : <<include>>
+UC4 ..> UC4_2 : <<include>>
+UC4 ..> UC4_3 : <<include>>
+UC4 ..> UC4_4 : <<include>>
+
+' Include relationships for Peminjaman Management
+UC5 ..> UC5_1 : <<include>>
+UC5 ..> UC5_2 : <<include>>
+UC5 ..> UC5_3 : <<include>>
+
+note right of Admin
+  Admin memiliki
+  akses penuh ke
+  semua fitur sistem
+end note
+
+note right of Petugas
+  Petugas dapat mengelola
+  buku, anggota, dan
+  transaksi peminjaman
+end note
+
+note right of Anggota
+  Anggota hanya dapat
+  melihat katalog buku
+  yang tersedia
+end note
+
+@enduml

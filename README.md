@@ -1,11 +1,123 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Perpustakaan - Library Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A complete Laravel-based library book borrowing management system with role-based access control and Mazer Bootstrap template.
+
+## Features
+
+- 📚 Book Management (CRUD)
+- 👥 Member Management (CRUD)
+- 📖 Borrowing Management with stock tracking
+- 🔐 Role-Based Authentication (Admin, Petugas, Anggota)
+- 📊 Dashboard with statistics
+- 🎨 Modern UI with Mazer Bootstrap template
+
+## Prerequisites
+
+- **PHP** >= 8.2
+- **Composer**
+- **XAMPP** (with MySQL/MariaDB and PHPMyAdmin)
+
+## Quick Setup for XAMPP
+
+### 1. Install XAMPP
+Download and install XAMPP from [https://www.apachefriends.org/](https://www.apachefriends.org/)
+
+### 2. Start MySQL
+Open XAMPP Control Panel and start **Apache** and **MySQL** modules.
+
+### 3. Create Database
+Open PHPMyAdmin at `http://localhost/phpmyadmin` and create a new database named `perpustakaan`.
+
+Or use MySQL command line:
+```bash
+mysql -u root -p
+CREATE DATABASE perpustakaan CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+EXIT;
+```
+
+### 4. Clone and Setup
+```bash
+git clone <repository-url>
+cd Perpustakaan
+composer install
+cp .env.example .env
+php artisan key:generate
+```
+
+### 5. Configure Database
+Edit `.env` file:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=perpustakaan
+DB_USERNAME=root
+DB_PASSWORD=
+```
+(Leave password empty for default XAMPP setup)
+
+### 6. Run Migrations
+```bash
+php artisan migrate:fresh --seed
+```
+
+### 7. Start Server
+```bash
+php artisan serve
+```
+
+Visit: `http://localhost:8000`
+
+## Default Login Credentials
+
+| Role | Email | Password |
+|------|-------|----------|
+| **Admin** | admin@perpustakaan.com | admin123 |
+| **Petugas** | petugas@perpustakaan.com | petugas123 |
+| **Anggota** | anggota@perpustakaan.com | anggota123 |
+
+## Documentation
+
+- **[MYSQL_SETUP.md](MYSQL_SETUP.md)** - Detailed MySQL/PHPMyAdmin setup guide for XAMPP
+- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Complete deployment and testing guide
+- **[diagrams/](diagrams/)** - UML diagrams (use case, activity, sequence)
+
+## Database Structure
+
+The application uses MySQL with the following main tables:
+- `users` - System users with role-based access
+- `anggotas` - Library members
+- `bukus` - Books catalog
+- `peminjamans` - Borrowing records
+
+## Troubleshooting
+
+### MySQL Connection Error
+- Ensure XAMPP MySQL is running
+- Check `.env` database credentials
+- Default XAMPP MySQL: username `root`, no password
+
+### Database Not Found
+```bash
+# Create database first
+mysql -u root -p -e "CREATE DATABASE perpustakaan;"
+# Then run migrations
+php artisan migrate:fresh --seed
+```
+
+For more troubleshooting tips, see [MYSQL_SETUP.md](MYSQL_SETUP.md).
+
+## Technology Stack
+
+- **Framework**: Laravel 12
+- **Database**: MySQL/MariaDB (via XAMPP)
+- **Frontend**: Bootstrap 5 (Mazer Template)
+- **Icons**: Bootstrap Icons
+- **PHP**: 8.2+
+
+---
+
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 ## About Laravel
 

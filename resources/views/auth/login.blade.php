@@ -11,7 +11,7 @@
                     <h3>Login Perpustakaan</h3>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('login.process') }}" method="POST">
+                    <form action="{{ url('/login') }}" method="POST">
                         @csrf
                         
                         <div class="mb-3">
